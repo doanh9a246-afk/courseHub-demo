@@ -1,0 +1,887 @@
+{
+  "info": {
+    "name": "CourseHub API - Buoi 3",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "01 - Health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/health",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "health"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code la 200\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Response la JSON\", () => {",
+              "    pm.response.to.be.json;",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "02 - List courses",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/courses",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "courses"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code la 200\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Response la JSON\", () => {",
+              "    pm.response.to.be.json;",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "03 - Search courses (q=web)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/courses?q=web",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "courses"
+          ],
+          "query": [
+            {
+              "key": "q",
+              "value": "web"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code la 200\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Response la JSON\", () => {",
+              "    pm.response.to.be.json;",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "04 - Courses pagination",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/courses?skip=1&limit=1",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "courses"
+          ],
+          "query": [
+            {
+              "key": "skip",
+              "value": "1"
+            },
+            {
+              "key": "limit",
+              "value": "1"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code la 200\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Response la JSON\", () => {",
+              "    pm.response.to.be.json;",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "05 - Courses invalid limit (422)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/courses?limit=0",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "courses"
+          ],
+          "query": [
+            {
+              "key": "limit",
+              "value": "0"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code la 422\", () => {",
+              "    pm.response.to.have.status(422);",
+              "});",
+              "pm.test(\"Response la JSON\", () => {",
+              "    pm.response.to.be.json;",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "06 - Course detail",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/courses/INT2204",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "courses",
+            "INT2204"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code la 200\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Response la JSON\", () => {",
+              "    pm.response.to.be.json;",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "07 - Course not found (404)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/courses/UNKNOWN",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "courses",
+            "UNKNOWN"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code la 404\", () => {",
+              "    pm.response.to.have.status(404);",
+              "});",
+              "pm.test(\"Response la JSON\", () => {",
+              "    pm.response.to.be.json;",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "08 - List lecturers (Bai 1)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/lecturers",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "lecturers"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code la 200\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Response la JSON\", () => {",
+              "    pm.response.to.be.json;",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "09 - List sections",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/sections",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "sections"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code la 200\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Response la JSON\", () => {",
+              "    pm.response.to.be.json;",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "10 - Available sections",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/sections?available_only=true",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "sections"
+          ],
+          "query": [
+            {
+              "key": "available_only",
+              "value": "true"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code la 200\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Response la JSON\", () => {",
+              "    pm.response.to.be.json;",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "11 - Section detail (Bai 2)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/sections/WEB-01",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "sections",
+            "WEB-01"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code la 200\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Response la JSON\", () => {",
+              "    pm.response.to.be.json;",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "12 - Section not found (404)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/sections/NO-CLASS",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "sections",
+            "NO-CLASS"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code la 404\", () => {",
+              "    pm.response.to.have.status(404);",
+              "});",
+              "pm.test(\"Response la JSON\", () => {",
+              "    pm.response.to.be.json;",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "13 - Update capacity to 4 (Bai 3)",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/sections/WEB-01/capacity",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "sections",
+            "WEB-01",
+            "capacity"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"capacity\": 4\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code la 200\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Response la JSON\", () => {",
+              "    pm.response.to.be.json;",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "14 - Capacity below enrolled (409)",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/sections/WEB-01/capacity",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "sections",
+            "WEB-01",
+            "capacity"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"capacity\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code la 409\", () => {",
+              "    pm.response.to.have.status(409);",
+              "});",
+              "pm.test(\"Response la JSON\", () => {",
+              "    pm.response.to.be.json;",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "15 - Reset capacity to 3",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/sections/WEB-01/capacity",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "sections",
+            "WEB-01",
+            "capacity"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"capacity\": 3\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code la 200\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Response la JSON\", () => {",
+              "    pm.response.to.be.json;",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "16 - Capacity invalid (422)",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/sections/WEB-01/capacity",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "sections",
+            "WEB-01",
+            "capacity"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"capacity\": 0\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code la 422\", () => {",
+              "    pm.response.to.have.status(422);",
+              "});",
+              "pm.test(\"Response la JSON\", () => {",
+              "    pm.response.to.be.json;",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "17 - Student enrollments",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/students/22000001/enrollments",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "students",
+            "22000001",
+            "enrollments"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code la 200\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Response la JSON\", () => {",
+              "    pm.response.to.be.json;",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "18 - Student not found (404)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/students/99999999/enrollments",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "students",
+            "99999999",
+            "enrollments"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code la 404\", () => {",
+              "    pm.response.to.have.status(404);",
+              "});",
+              "pm.test(\"Response la JSON\", () => {",
+              "    pm.response.to.be.json;",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "19 - Create enrollment",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/enrollments",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "enrollments"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"student_id\": \"22000004\",\n  \"class_section_id\": \"WEB-01\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code la 201\", () => {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "pm.test(\"Response la JSON\", () => {",
+              "    pm.response.to.be.json;",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "20 - Duplicate enrollment (409)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/enrollments",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "enrollments"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"student_id\": \"22000004\",\n  \"class_section_id\": \"WEB-01\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code la 409\", () => {",
+              "    pm.response.to.have.status(409);",
+              "});",
+              "pm.test(\"Response la JSON\", () => {",
+              "    pm.response.to.be.json;",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "21 - Invalid body (422)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/enrollments",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "enrollments"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"student_id\": \"123\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code la 422\", () => {",
+              "    pm.response.to.have.status(422);",
+              "});",
+              "pm.test(\"Response la JSON\", () => {",
+              "    pm.response.to.be.json;",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "22 - Delete enrollment",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/enrollments/22000004/WEB-01",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "enrollments",
+            "22000004",
+            "WEB-01"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code la 204\", () => {",
+              "    pm.response.to.have.status(204);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "23 - Delete again (404)",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/enrollments/22000004/WEB-01",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "enrollments",
+            "22000004",
+            "WEB-01"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code la 404\", () => {",
+              "    pm.response.to.have.status(404);",
+              "});",
+              "pm.test(\"Response la JSON\", () => {",
+              "    pm.response.to.be.json;",
+              "});"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
