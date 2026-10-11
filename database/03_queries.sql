@@ -1,4 +1,3 @@
--- Kiem tra du lieu ban dau
 SELECT 'students' AS table_name, COUNT(*) AS row_count
 FROM students
 UNION ALL SELECT 'courses', COUNT(*) FROM courses
@@ -7,25 +6,21 @@ UNION ALL SELECT 'lecturers', COUNT(*) FROM lecturers
 UNION ALL SELECT 'class_sections', COUNT(*) FROM class_sections
 UNION ALL SELECT 'enrollments', COUNT(*) FROM enrollments;
 
--- Q1
 SELECT code, name, credits
 FROM courses
 ORDER BY code;
 
--- Q2
 SELECT code, name
 FROM courses
 WHERE LOWER(code) LIKE '%web%'
 OR LOWER(name) LIKE '%web%'
 ORDER BY code;
 
--- Q3a
 SELECT student_id, class_section_id
 FROM enrollments
 WHERE student_id = '22000001'
 ORDER BY class_section_id;
 
--- Q3
 SELECT s.name AS student_name,
 cs.id AS class_id,
 c.code AS course_code
@@ -36,7 +31,6 @@ JOIN courses AS c ON c.code = cs.course_code
 WHERE s.id = '22000001'
 ORDER BY cs.id;
 
--- Q4
 SELECT cs.id AS class_id,
 cs.course_code,
 cs.capacity,
@@ -47,7 +41,6 @@ LEFT JOIN enrollments AS e ON e.class_section_id = cs.id
 GROUP BY cs.id, cs.course_code, cs.capacity
 ORDER BY cs.id;
 
--- Q5
 SELECT s.id, s.name
 FROM students AS s
 WHERE NOT EXISTS (
@@ -57,7 +50,6 @@ WHERE e.student_id = s.id
 )
 ORDER BY s.id;
 
--- Q6
 WITH section_counts AS (
 SELECT cs.id AS class_id,
 cs.capacity,
@@ -72,7 +64,6 @@ FROM section_counts
 WHERE enrolled < capacity
 ORDER BY class_id;
 
--- Q7
 WITH course_totals AS (
 SELECT c.code, COUNT(e.student_id) AS total
 FROM courses AS c
