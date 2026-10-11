@@ -1,5 +1,3 @@
--- CourseHub schema (PostgreSQL)
-
 CREATE TABLE students (
     id VARCHAR(8) NOT NULL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,

@@ -1,5 +1,3 @@
--- CourseHub seed data
-
 INSERT INTO students (id, name, major, email) VALUES
 ('22000001', 'Nguyen Minh Anh', 'KHDL', 'anh@example.com'),
 ('22000002', 'Tran Duc Long', 'KHDL', 'long@example.com'),
