@@ -40,9 +40,63 @@ def enroll(
     return student_id, response.status_code, body
 
 
+def set_capacity(capacity: int) -> requests.Response:
+    return requests.patch(
+        f"{BASE_URL}/sections/{SECTION_ID}/capacity",
+        json={"capacity": capacity},
+        timeout=15,
+    )
+
+
+def get_race_section() -> dict[str, object]:
+    sections = requests.get(f"{BASE_URL}/sections", timeout=5).json()
+    return next(
+        item for item in sections
+        if item["class_id"] == SECTION_ID
+    )
+
+
+def test_post_patch(rounds: int = 20) -> None:
+    # Lop co capacity = 2, da co 1 dang ky. POST them 1 sinh vien va PATCH
+    # capacity = 1 chay dong thoi: chi duoc 1 request thanh cong.
+    for _ in range(rounds):
+        reset_demo()
+        set_capacity(2).raise_for_status()
+        first = requests.post(
+            f"{BASE_URL}/enrollments",
+            json={"student_id": STUDENT_IDS[1], "class_section_id": SECTION_ID},
+            timeout=15,
+        )
+        assert first.status_code == 201, first.text
+
+        barrier = threading.Barrier(2)
+
+        def patch_capacity() -> int:
+            barrier.wait(timeout=5)
+            return set_capacity(1).status_code
+
+        with ThreadPoolExecutor(max_workers=2) as executor:
+            post_future = executor.submit(enroll, STUDENT_IDS[0], barrier)
+            patch_future = executor.submit(patch_capacity)
+            post_status = post_future.result()[1]
+            patch_status = patch_future.result()
+
+        statuses = sorted([post_status, patch_status])
+        assert statuses in ([200, 409], [201, 409]), (
+            f"POST {post_status}, PATCH {patch_status}"
+        )
+        race_section = get_race_section()
+        assert race_section["enrolled"] <= race_section["capacity"], race_section
+
+    reset_demo()
+    set_capacity(1).raise_for_status()
+    print(f"PASS: {rounds} lan POST + PATCH dong thoi, enrolled <= capacity.")
+
+
 def main() -> None:
     health = requests.get(f"{BASE_URL}/health", timeout=5)
     health.raise_for_status()
+    test_post_patch()
     reset_demo()
 
     barrier = threading.Barrier(len(STUDENT_IDS))
@@ -59,11 +113,7 @@ def main() -> None:
     statuses = sorted(status_code for _, status_code, _ in results)
     assert statuses == [201, 409], f"Trang thai khong mong doi: {statuses}"
 
-    sections = requests.get(f"{BASE_URL}/sections", timeout=5).json()
-    race_section = next(
-        item for item in sections
-        if item["class_id"] == SECTION_ID
-    )
+    race_section = get_race_section()
     assert race_section["enrolled"] == 1
     assert race_section["remaining"] == 0
     print("PASS: chi mot request dang ky thanh cong cho lop co 1 cho.")

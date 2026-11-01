@@ -52,4 +52,18 @@ can doc toan bang va khong can Sort.
 - `GET /courses?q=%25%27%20OR%20%271%27%3D%271%27--` -> 200, `[]` (khong lo toan bo bang).
 - `GET /courses` khong co q -> 3 hoc phan.
 
+## Sua theo review PR #1
+
+- [P1] PATCH /sections/{id}/capacity: khoa dong class_sections bang FOR UPDATE truoc,
+  roi moi COUNT enrollments. Truoc do PATCH dem khong khoa nen POST + PATCH dong thoi
+  co the cung thanh cong, lop thanh 2/1 cho.
+  - Them test_post_patch vao week04_concurrency_test.py (lop 2 cho, da co 1 dang ky;
+    POST them 1 sinh vien va PATCH capacity = 1 cung luc; chi 1 request duoc thanh cong).
+  - Code cu: FAIL `POST 201, PATCH 200`. Code moi: PASS 100/100 lan.
+- [P2] 90_reset_demo.sql: DROP enrollment_events va schema_migrations truoc cac bang cha.
+  - Kiem tra trong 1 transaction roi ROLLBACK: reset -> 01_schema -> 02_seed -> 04_views
+    -> migration 001 -> reset -> tao lai schema/migration.
+  - Reset cu: `cannot drop table class_sections because other objects depend on it`.
+    Reset moi: chay het chuoi, schema_migrations = 001, enrollments = 5.
+
 Khong commit backend/.env.
