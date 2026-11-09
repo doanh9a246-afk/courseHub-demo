@@ -55,9 +55,4 @@ RACE-01 capacity 1, enrolled 0.
 
 Payload POST trong Network: `{"student_id": "22000004", "class_section_id": "WEB-01"}`.
 
-## Ban phac giao dien (Figma)
-
-Link Figma: _bo sung_ (frame Desktop 1280 px: tieu de, chon sinh vien, danh sach lop,
-lop da dang ky; them trang thai dang ky thanh cong va lop het cho).
-
 Khong commit `backend/.env`, `frontend/.env.local`, `node_modules/`, `dist/`.
